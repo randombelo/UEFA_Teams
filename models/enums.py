@@ -2,13 +2,13 @@ from enum import Enum
 
 
 class PlayerPosition(str, Enum):
-    portero = "portero"
-    defensa = "defensa"
-    mediocampista = "mediocampista"
-    delantero = "delantero"
+    goalkeeper = "goalkeeper"
+    defender = "defender"
+    midfielder = "midfielder"
+    forward = "forward"
 
 
 class TeamDivision(str, Enum):
-    primera = "primera"
-    segunda = "segunda"
-    tercera = "tercera"
+    first = "first"
+    second = "second"
+    third = "third"
