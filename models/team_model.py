@@ -24,6 +24,11 @@ class Team(Base):
         back_populates="club",
         cascade="all, delete-orphan"
     )
+    
+    @property
+    def players_count(self) -> int:
+        """Number of players currently assigned to the team."""
+        return len(self.players)
 
     def __repr__(self) -> str:
         return f"<Team(id={self.id}, name='{self.name}')>"
