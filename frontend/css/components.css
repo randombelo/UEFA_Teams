@@ -72,3 +72,29 @@
   animation: spin 0.7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Molecules --- */
+.form-field { margin-bottom: var(--spacing-md); }
+.form-field__error {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  max-width: 360px;
+}
+.search-bar .input { flex: 1; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+.pagination__page {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
