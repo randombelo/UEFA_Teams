@@ -1,0 +1,59 @@
+/* pages.css - page and template level layouts */
+.app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+.app-header__inner {
+  max-width: var(--max-width); margin-inline: auto;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
+}
+.app-header__bar {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+.app-header__brand {
+  display: none;                                   /* móvil: sin marca, solo título */
+  font-weight: 700; font-size: var(--font-size-lg); text-decoration: none;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.app-header__title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header__toggle {
+  display: inline-flex; flex-direction: column; gap: 5px;
+  background: transparent; border: 0; cursor: pointer; padding: var(--spacing-xs);
+}
+.app-header__toggle-bar {
+  width: 22px; height: 3px; border-radius: 2px;
+  background: var(--color-primary); transition: transform .2s ease;
+}
+.app-header nav { display: none; }                                   /* móvil: colapsado */
+.app-header.is-open nav { display: block; }                          /* móvil: abierto */
+.app-header.is-open nav ul { flex-direction: column; gap: var(--spacing-sm); padding-bottom: var(--spacing-md); }
+
+@media (min-width: 768px) {
+ 
+  .app-header__toggle { display: none; }                             /* desktop: sin botón */
+  .app-header nav { display: block; }                                /* desktop: nav siempre visible */
+  .app-header nav ul { flex-direction: row; gap: var(--spacing-lg); }
+}
+
+.app-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding: var(--spacing-md);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.page-title { margin-bottom: var(--spacing-lg); }

@@ -10,18 +10,11 @@
     <title>UEFA Teams API - Home</title>
     <link rel="stylesheet" href="./css/tokens.css" />
     <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/pages.css" />
   </head>
-  <body>
-    <header>
-      <nav aria-label="Main navigation">
-        <ul>
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./pages/teams.html">Teams</a></li>
-          <li><a href="./pages/players.html">Players</a></li>
-          <li><a href="./pages/docs.html">Docs</a></li>
-        </ul>
-      </nav>
-    </header>
+  <body data-page="home">
+    <div id="header-root"></div>
 
     <main>
       <section aria-labelledby="home-title">
@@ -34,8 +27,11 @@
       </section>
     </main>
 
-    <footer>
-      <p>&copy; 2026 UEFA Teams API - Proyecto de Formacion FullStack</p>
-    </footer>
+    <div id="footer-root"></div>
+
+    <script type="module">
+      import { mountLayout } from "/js/app/mountLayout.js";
+      mountLayout();
+    </script>
   </body>
 </html>

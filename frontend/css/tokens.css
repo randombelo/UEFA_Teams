@@ -1,17 +1,20 @@
 :root {
   /* Brand palette */
-  --color-primary: #1e4b8f;
-  --color-primary-dark: #14365f;
-  --color-accent: #ff5a1f;
-  --color-bg: #f5f7fa;
+  --color-primary-light: #6facf5;
+  --color-primary-soft: #e8f1fe;
+  --gradient-primary: linear-gradient(135deg, #1e6fd9, #3aa0f0);
+  --color-primary: #1e6fd9;
+  --color-primary-dark: #0b3d91;
+  --color-accent: #00a8e8;
+  --color-bg: #f2f7ff;
   --color-surface: #ffffff;
-  --color-text: #1c2733;
-  --color-text-muted: #6b7a8d;
-  --color-border: #dbe2ea;
+  --color-text: #122033;
+  --color-text-muted: #5c6f8c;
+  --color-border: #d7e5f5;
   --color-success: #1fa855;
   --color-danger: #d64545;
   --color-warning: #e8a13c;
-
+  
   /* Spacing scale */
   --spacing-xs: 4px;
   --spacing-sm: 8px;

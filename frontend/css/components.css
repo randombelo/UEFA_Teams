@@ -17,8 +17,8 @@
 .btn:active { transform: translateY(1px); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.btn--primary { background-color: var(--color-primary); color: #fff; }
-.btn--primary:hover { background-color: var(--color-primary-dark); }
+.btn--primary { background: var(--gradient-primary); color: #fff; }
+.btn--primary:hover { filter: brightness(1.08); } 
 .btn--danger { background-color: var(--color-danger); color: #fff; }
 .btn--ghost { background-color: transparent; border-color: var(--color-border); color: var(--color-text); }
 .btn--ghost:hover { border-color: var(--color-primary); color: var(--color-primary); }
@@ -60,7 +60,7 @@
 }
 .badge--success { background-color: #d8f3e3; color: var(--color-success); }
 .badge--danger  { background-color: #fce4e4; color: var(--color-danger); }
-.badge--accent  { background-color: #ffe3d6; color: var(--color-accent); }
+.badge--accent { background-color: #ddf1fe; color: #0b6bb3; }
 
 .spinner {
   display: inline-block;
