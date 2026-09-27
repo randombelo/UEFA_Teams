@@ -17,16 +17,18 @@
       <section aria-labelledby="teams-title">
         <h1 id="teams-title" class="page-title">Teams</h1>
         <!-- Contenido real: llega en el Paso 7 (tabla + búsqueda + paginación) -->
-        <p>Teams section coming soon.</p>
+        <div id="teams-toolbar"></div>
         <div id="teams-root"></div>
       </section>
     </main>
 
     <div id="footer-root"></div>
 
-    <script type="module">
-      import { mountLayout } from "/js/app/mountLayout.js";
-      mountLayout();
-    </script>
+  <script type="module">
+    import { mountLayout } from "/js/app/mountLayout.js";
+    import { mountTeams } from "/js/pages/teams.js";
+    mountLayout();
+    mountTeams();
+  </script>
   </body>
 </html>

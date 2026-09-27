@@ -58,6 +58,7 @@
   background-color: var(--color-border);
   color: var(--color-text);
 }
+.badge--neutral { background-color: var(--color-primary-soft); color: var(--color-primary-dark); }
 .badge--success { background-color: #d8f3e3; color: var(--color-success); }
 .badge--danger  { background-color: #fce4e4; color: var(--color-danger); }
 .badge--accent { background-color: #ddf1fe; color: #0b6bb3; }

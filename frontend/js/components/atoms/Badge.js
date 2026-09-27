@@ -1,3 +1,3 @@
-export function Badge({ text, variant = "neutral" }) {
-  return `<span class="badge badge--${variant}">${text}</span>`;
+export function Badge({ label, variant = "neutral" }) {
+  return `<span class="badge badge--${variant}">${label}</span>`;
 }
