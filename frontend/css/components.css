@@ -113,3 +113,6 @@
 .toast--danger  { border-left-color: var(--color-danger); }
 .toast__close { margin-left: auto; background: none; border: 0; cursor: pointer; color: var(--color-text-muted); }
 @keyframes toast-in { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1;} }
+
+.dialog--sm { width: min(92vw, 380px); }
+.dialog__message { margin: 0 0 var(--spacing-sm); color: var(--color-text-muted); }

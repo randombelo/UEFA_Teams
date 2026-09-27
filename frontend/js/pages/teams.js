@@ -4,6 +4,8 @@ import { Btn } from "../components/atoms/Btn.js";
 import { TeamTable, mountTeamTable } from "../components/organisms/TeamTable.js";
 import { teamService } from "../services/teamService.js";
 import { showToast } from "../components/organisms/Toast.js";
+import { mountTeamFormDialog } from "../components/organisms/TeamFormDialog.js";
+import { mountConfirmDialog } from "../components/organisms/ConfirmDialog.js";
 
 const state = { page: 1, limit: 10, teams: [], loading: false, search: "", hasNext: false };
 const toolbar = document.querySelector("#teams-toolbar");
@@ -43,6 +45,15 @@ function render() {
 
 export function mountTeams() {
   render();
-  mountTeamTable(root, { onEdit: (id) => console.log("Paso 8: editar", id), onDelete: (id) => console.log("Paso 9: eliminar", id) });
-  loadTeams();   // dispara la primera llamada real
+  const { open: openTeamForm } = mountTeamFormDialog({
+    onCreate: async (p) => { await teamService.create(p); showToast({ type: "success", message: "Equipo creado correctamente" }); loadTeams(); },
+    onUpdate: async (id, p) => { await teamService.update(id, p); showToast({ type: "success", message: "Equipo actualizado correctamente" }); loadTeams(); },
+  });
+  mountConfirmDialog({ onConfirm: () => {} });
+  toolbar.addEventListener("click", (e) => { if (e.target.closest("#add-team")) openTeamForm(null); });
+  mountTeamTable(root, {
+    onEdit: (id) => { const team = state.teams.find((t) => t.id === id); if (team) openTeamForm(team); },
+    onDelete: (id) => console.log("Paso 9: eliminar", id),
+  });
+  loadTeams();
 }
