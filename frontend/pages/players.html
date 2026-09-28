@@ -16,8 +16,7 @@
     <main>
       <section aria-labelledby="players-title">
         <h1 id="players-title" class="page-title">Players</h1>
-        <!-- Contenido real: llega en el Paso 10 (filtro por club + tabla) -->
-        <p>Players section coming soon.</p>
+        <div id="players-toolbar"></div>
         <div id="players-root"></div>
       </section>
     </main>
@@ -26,7 +25,9 @@
 
     <script type="module">
       import { mountLayout } from "/js/app/mountLayout.js";
+      import { mountPlayers } from "/js/pages/players.js";
       mountLayout();
+      mountPlayers();
     </script>
   </body>
 </html>
