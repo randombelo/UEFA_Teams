@@ -3,11 +3,14 @@ import { PaginationBar, mountPaginationBar } from "../components/molecules/Pagin
 import { Select } from "../components/atoms/Select.js";
 import { Btn } from "../components/atoms/Btn.js";
 import { PlayerTable, mountPlayerTable } from "../components/organisms/PlayerTable.js";
+import { PlayerFormDialog, mountPlayerFormDialog } from "../components/organisms/PlayerFormDialog.js";
 import { teamService } from "../services/teamService.js";
 import { playerService } from "../services/playerService.js";
 import { showToast } from "../components/organisms/Toast.js";
+import { mountConfirmDialog } from "../components/organisms/ConfirmDialog.js";
 
 const state = { page: 1, limit: 10, players: [], clubs: [], loading: false, search: "", clubId: "", hasNext: false };
+let pendingPlayerId = null;
 const toolbar = document.querySelector("#players-toolbar");
 const root = document.querySelector("#players-root");
 
@@ -51,8 +54,52 @@ function render() {
 
 export function mountPlayers() {
   render();
-  toolbar.addEventListener("change", (e) => { if (e.target.id === "club-filter") { state.clubId = e.target.value; state.page = 1; loadPlayers(); } });
-  toolbar.addEventListener("click", (e) => { if (e.target.closest("#add-player")) console.log("Paso 11: nuevo jugador"); });
-  mountPlayerTable(root, { onEdit: (id) => console.log("Paso 11: editar", id), onDelete: (id) => console.log("Paso 12: eliminar", id) });
+  const { open: openPlayerForm } = mountPlayerFormDialog({
+    onCreate: async (p) => { await playerService.create(p); showToast({ type: "success", message: "Jugador creado correctamente" }); loadPlayers(); },
+    onUpdate: async (id, p) => { await playerService.update(id, p); showToast({ type: "success", message: "Jugador actualizado correctamente" }); loadPlayers(); },
+  });
+
+  const { open: openConfirm } = mountConfirmDialog({
+    onConfirm: async () => {
+      const id = pendingPlayerId;
+      pendingPlayerId = null;
+      try {
+        await playerService.remove(id);
+        showToast({
+          type: "success",
+          message: "Jugador eliminado correctamente",
+        });
+        if (state.players.length === 1 && state.page > 1) state.page--;
+        loadPlayers();
+      } catch (err) {
+        showToast({
+          type: "danger",
+          message: err.message || "Error al eliminar",
+        });
+      }
+    },
+  });
+  toolbar.addEventListener("change", (e) => {
+    if (e.target.id === "club-filter") { state.clubId = e.target.value; state.page = 1; loadPlayers(); }
+  });
+  toolbar.addEventListener("click", (e) => {
+    if (!e.target.closest("#add-player")) return;
+    if (state.clubs.length === 0) return showToast({ type: "warning", message: "Primero crea un equipo antes de añadir jugadores" });
+    openPlayerForm(null, state.clubs);
+  });
+  mountPlayerTable(root, {
+    onEdit: (id) => {
+      const player = state.players.find((p) => p.id === id);
+      if (player) openPlayerForm(player, state.clubs);
+    },
+    onDelete: (id) => {
+      const player = state.players.find((p) => p.id === id);
+      if (!player) return;
+      pendingPlayerId = id;
+      openConfirm(
+        `¿Eliminar a "${player.name}"? Esta acción no se puede deshacer.`,
+      );
+    },
+  });
   loadClubs(); loadPlayers();
 }

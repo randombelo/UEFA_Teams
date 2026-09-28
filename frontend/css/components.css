@@ -111,6 +111,7 @@
   animation: toast-in .2s ease; }
 .toast--success { border-left-color: var(--color-success); }
 .toast--danger  { border-left-color: var(--color-danger); }
+.toast--warning { border-left-color: var(--color-warning); }
 .toast__close { margin-left: auto; background: none; border: 0; cursor: pointer; color: var(--color-text-muted); }
 @keyframes toast-in { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1;} }
 
