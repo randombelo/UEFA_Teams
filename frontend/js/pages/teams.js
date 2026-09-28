@@ -8,6 +8,7 @@ import { mountTeamFormDialog } from "../components/organisms/TeamFormDialog.js";
 import { mountConfirmDialog } from "../components/organisms/ConfirmDialog.js";
 
 const state = { page: 1, limit: 10, teams: [], loading: false, search: "", hasNext: false };
+let pendingDeleteId = null; 
 const toolbar = document.querySelector("#teams-toolbar");
 const root = document.querySelector("#teams-root");
 
@@ -49,11 +50,29 @@ export function mountTeams() {
     onCreate: async (p) => { await teamService.create(p); showToast({ type: "success", message: "Equipo creado correctamente" }); loadTeams(); },
     onUpdate: async (id, p) => { await teamService.update(id, p); showToast({ type: "success", message: "Equipo actualizado correctamente" }); loadTeams(); },
   });
-  mountConfirmDialog({ onConfirm: () => {} });
+  const { open: openConfirm } = mountConfirmDialog({
+    onConfirm: async () => {
+      const id = pendingDeleteId;
+      pendingDeleteId = null;
+      try {
+        await teamService.remove(id);
+        showToast({ type: "success", message: "Equipo eliminado correctamente" });
+        if (state.teams.length === 1 && state.page > 1) state.page--;   // página que queda vacía → retroceder
+        loadTeams();
+      } catch (err) {
+        showToast({ type: "danger", message: err.message || "Error al eliminar" });
+      }
+    },
+  });
   toolbar.addEventListener("click", (e) => { if (e.target.closest("#add-team")) openTeamForm(null); });
   mountTeamTable(root, {
     onEdit: (id) => { const team = state.teams.find((t) => t.id === id); if (team) openTeamForm(team); },
-    onDelete: (id) => console.log("Paso 9: eliminar", id),
+    onDelete: (id) => {
+      const team = state.teams.find((t) => t.id === id);
+      if (!team) return;
+      pendingDeleteId = id;                       // (1) guardar qué se va a borrar
+      openConfirm(`¿Eliminar a "${team.name}"? Esta acción no se puede deshacer.`);   // (2) abrir diálogo
+    },
   });
   loadTeams();
 }
