@@ -20,19 +20,47 @@
     <main>
       <section aria-labelledby="home-title">
         <h1 id="home-title">UEFA Teams Management API</h1>
-        <p>
+        <p class="lead">
           Frontend para gestionar <strong>equipos</strong> y
-          <strong>jugadores</strong> de fútbol, consumiendo la API FastAPI de
-          forma asíncrona mediante Axios.
+          <strong>jugadores</strong> de fútbol, consumiendo de forma
+          asíncrona la API FastAPI mediante Axios con una interfaz
+          construida bajo el patrón <strong>Atomic Design</strong>.
         </p>
+        <p id="api-status"></p>
+      </section>
+
+      <section aria-labelledby="home-features">
+        <h2 id="home-features">Características</h2>
+        <div class="features">
+          <a class="feature" href="/pages/teams.html">
+            <h3>Equipos</h3>
+            <p>Crear, editar, listar y eliminar clubes con búsqueda y paginación.</p>
+          </a>
+          <a class="feature" href="/pages/players.html">
+            <h3>Jugadores</h3>
+            <p>CRUD completo con filtrado por club y barra de rendimiento.</p>
+          </a>
+          <a class="feature" href="/pages/docs.html">
+            <h3>Documentación</h3>
+            <p>Endpoints, parámetros y ejemplos; algunos con petición real a la API.</p>
+          </a>
+        </div>
+        <ul class="feature-list">
+          <li>Gestión de errores controlada con toasts de éxito / error.</li>
+          <li>Búsquedas y paginación en las tablas.</li>
+          <li>Filtrado por tabla relacionada (jugadores por club).</li>
+          <li>Validación en cliente y mapeo de errores 422 del servidor.</li>
+        </ul>
       </section>
     </main>
 
     <div id="footer-root"></div>
 
-    <script type="module">
-      import { mountLayout } from "/js/app/mountLayout.js";
-      mountLayout();
+     <script type="module">
+        import { mountLayout } from "/js/app/mountLayout.js";
+        import { mountHome } from "/js/pages/home.js";
+        mountLayout();
+        mountHome();
     </script>
   </body>
 </html>

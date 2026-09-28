@@ -16,8 +16,7 @@
     <main>
       <section aria-labelledby="docs-title">
         <h1 id="docs-title" class="page-title">API Documentation</h1>
-        <!-- Contenido real: llega en el Paso 12 (endpoints + ejemplos) -->
-        <p>Documentation coming soon.</p>
+        <p id="api-status"></p>
         <div id="docs-root"></div>
       </section>
     </main>
@@ -25,8 +24,10 @@
     <div id="footer-root"></div>
 
     <script type="module">
-      import { mountLayout } from "/js/app/mountLayout.js";
-      mountLayout();
-    </script>
+        import { mountLayout } from "/js/app/mountLayout.js";
+        import { mountDocs } from "/js/pages/docs.js";
+        mountLayout();
+        mountDocs();
+     </script>
   </body>
 </html>
