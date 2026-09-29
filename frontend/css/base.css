@@ -52,8 +52,13 @@ nav a:hover {
 }
 
 /* Headings */
-h1 { font-size: var(--font-size-xl); }
-h2 { font-size: var(--font-size-lg); }
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
 
 /* Accessibility: visible focus outline always present */
 a:focus-visible,
