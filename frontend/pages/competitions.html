@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competiciones - UEFA Teams API</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+  </head>
+  <body data-page="competitions">
+    <div id="header-root"></div>
+
+    <main>
+      <section aria-labelledby="competitions-title">
+        <h1 id="competitions-title" class="page-title">Competiciones</h1>
+        <div id="competitions-toolbar"></div>
+        <div id="competitions-root"></div>
+      </section>
+    </main>
+
+    <div id="footer-root"></div>
+
+    <script type="module">
+      import { mountLayout } from "/js/app/mountLayout.js";
+      import { mountCompetitions } from "/js/pages/competitions.js";
+      mountLayout();
+      mountCompetitions();
+    </script>
+  </body>
+</html>

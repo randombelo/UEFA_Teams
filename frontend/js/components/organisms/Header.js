@@ -2,6 +2,7 @@ const LINKS = [
   { label: "Home",    href: "/index.html",        page: "home" },
   { label: "Teams",   href: "/pages/teams.html",  page: "teams" },
   { label: "Players", href: "/pages/players.html", page: "players" },
+  { label: "Competiciones", href: "/pages/competitions.html", page: "competitions" },
   { label: "Docs",    href: "/pages/docs.html",   page: "docs" },
 ];
 
