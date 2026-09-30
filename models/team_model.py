@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Date, Enum
 from sqlalchemy.orm import relationship
 from database.database import Base
 from models.enums import TeamDivision
+from models.competition_model import team_competitions
 
 
 class Team(Base):
@@ -24,7 +25,13 @@ class Team(Base):
         back_populates="club",
         cascade="all, delete-orphan"
     )
-    
+    competitions = relationship(
+        "Competition",
+        secondary=team_competitions,
+        back_populates="teams"
+    )
+
+        
     @property
     def players_count(self) -> int:
         """Number of players currently assigned to the team."""

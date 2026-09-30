@@ -1,6 +1,7 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, ConfigDict, Field
+from schemas.competition_schema import CompetitionResponse
 
 from models.enums import TeamDivision
 
@@ -59,13 +60,19 @@ class TeamBase(BaseModel):
         description="Current club president",
         examples=["Florentino Perez"]
     )
+   
 
 
 class TeamCreate(TeamBase):
     """
     Schema for creating a new team.
     """
-    pass
+    competition_ids: Optional[List[int]] = Field(
+        default=[],
+        description="IDs de las competiciones en las que compite el equipo",
+        examples=[[1, 2]]
+    )
+    
 
 
 class TeamUpdate(BaseModel):
@@ -80,7 +87,10 @@ class TeamUpdate(BaseModel):
     division: Optional[TeamDivision] = Field(None)
     head_coach: Optional[str] = Field(None, min_length=1, max_length=100)
     president: Optional[str] = Field(None, min_length=1, max_length=100)
-
+    competition_ids: Optional[List[int]] = Field(
+        None,
+        description="Updated list of competition IDs associated with this team"
+    )
 
 class TeamResponse(TeamBase):
     """
@@ -89,8 +99,14 @@ class TeamResponse(TeamBase):
     id: int = Field(..., description="Unique database identifier", examples=[1])
     players_count: int = Field(..., description="Number of players in the team")
 
+    competitions: List[CompetitionResponse] = Field(
+        default=[],
+        description="List of competitions linked to this team via Many-to-Many relation"
+    )
     # Enable ORM attribute mapping for SQLAlchemy instances
     model_config = ConfigDict(from_attributes=True)
+
+   
     
 class TeamSummary(BaseModel):
     """

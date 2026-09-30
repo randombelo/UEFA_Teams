@@ -4,6 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from models.team_model import Team
+from models.competition_model import Competition
 from schemas.team_schema import TeamCreate, TeamUpdate
 
 
@@ -47,6 +48,8 @@ def create_team(db: Session, team_data: TeamCreate) -> Team:
         head_coach=team_data.head_coach,
         president=team_data.president
     )
+    if team_data.competition_ids:
+        new_team.competitions = db.query(Competition).filter(Competition.id.in_(team_data.competition_ids)).all()
     try:
         db.add(new_team)
         db.commit()          # ← aquí se genera el id
@@ -69,8 +72,11 @@ def update_team(db: Session, team_id: int, team_data: TeamUpdate) -> Optional[Te
         return None
 
     update_fields = team_data.model_dump(exclude_unset=True)
+    competition_ids = update_fields.pop("competition_ids", None)
     for field, value in update_fields.items():
         setattr(existing_team, field, value)
+    if competition_ids is not None:
+        existing_team.competitions = db.query(Competition).filter(Competition.id.in_(competition_ids)).all()
 
     try:
         db.commit()

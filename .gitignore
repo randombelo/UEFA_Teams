@@ -24,3 +24,6 @@ ENV/
 *.swp
 *.swo
 .DS_Store
+
+# Frontend moved to its own repository (UEFA_Teams_Frontend)
+frontend/
