@@ -7,6 +7,7 @@ from alembic import command
 from config.config_variables import APP_TITLE, APP_VERSION, APP_DESCRIPTION
 from routes.team_routes import router as teams_router
 from routes.player_routes import router as players_router
+from routes.competition_routes import router as competitions_router
 
 
 @asynccontextmanager
@@ -40,6 +41,7 @@ app.add_middleware(
 # Include application routers
 app.include_router(teams_router)
 app.include_router(players_router)
+app.include_router(competitions_router)
 
 
 @app.get("/", tags=["Health Check"])
