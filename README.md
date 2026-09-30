@@ -411,21 +411,11 @@ EOF
 
 ## Frontend (proyecto hermano)
 
-El frontend vive en un **repositorio independiente**: [`../UEFA_Teams_Frontend/`](../UEFA_Teams_Frontend/).
+El frontend vive en un **repositorio independiente**: [`https://github.com/randombelo/UEFA_Teams_Frontend/`](https://github.com/randombelo/UEFA_Teams_Frontend/).
 
 - **Servir el frontend**: `python3 -m http.server 5500` desde la raíz de `UEFA_Teams_Frontend`.
 - **URL de la API**: se configura en el frontend en `js/config/endpointsConfig.js` → `API_BASE_URL`. Por defecto apunta a `http://127.0.0.1:8000`.
 - **CORS**: el backend permite cualquier origen (`allow_origins=["*"]`), por lo que el frontend puede servirse desde cualquier puerto o dominio (por ejemplo `http://127.0.0.1:5500`).
-
-## Capturas
-
-> Las capturas se añaden manualmente en esta carpeta. Reemplaza la ruta de cada una por tu imagen y ajústable si hace falta.
-
-| Descripción | Imagen |
-|-------------|--------|
-| Documentación Swagger UI | `docs/screenshots/swagger.png` |
-| Listado de equipos con competiciones | `docs/screenshots/teams.png` |
-| Listado de jugadores con filtro por club | `docs/screenshots/players.png` |
 
 ## Troubleshooting
 
