@@ -11,5 +11,10 @@ export const ENDPOINTS = [
   { key: "createPlayer", name: "Crear jugador",     method: "POST",   url: "/players/",        params: "body PlayerCreate", summary: "Crea un jugador", example: { name: "Kylian Mbappe", country: "France", performance: 93, field_position: "forward", birth_date: "1998-12-20", market_value: "180000000.00", salary: "25000000.00", club_id: 1 } },
   { key: "updatePlayer", name: "Editar jugador",    method: "PUT",    url: "/players/{id}",   params: "body PlayerUpdate", summary: "Actualiza parcialmente", example: { performance: 94 } },
   { key: "deletePlayer", name: "Eliminar jugador",  method: "DELETE", url: "/players/{id}",   params: "—", summary: "Borra un jugador", example: null },
+  { key: "listCompetitions", name: "Listar competiciones", method: "GET",    url: "/competitions/",    params: "?skip&limit", summary: "Lista con paginación", example: null },
+  { key: "getCompetition", name: "Detalle competición",   method: "GET",    url: "/competitions/{id}", params: "—", summary: "Una competición por ID", example: null },
+  { key: "createCompetition", name: "Crear competición",    method: "POST",   url: "/competitions/",    params: "body CompetitionCreate", summary: "Crea una competición", example: { name: "La Liga", country: "Spain" } },
+  { key: "updateCompetition", name: "Editar competición",   method: "PUT",    url: "/competitions/{id}", params: "body CompetitionUpdate", summary: "Actualiza parcialmente", example: { country: "Spain" } },
+  { key: "deleteCompetition", name: "Eliminar competición", method: "DELETE", url: "/competitions/{id}", params: "—", summary: "Borra una competición", example: null },
   { key: "health", name: "Health check",      method: "GET",    url: "/",               params: "—", summary: "Estado del servicio", example: null },
 ];
