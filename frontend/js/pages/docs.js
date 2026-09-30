@@ -6,12 +6,13 @@ import { EndpointCard } from "../components/organisms/EndpointCard.js";
 const GROUP = [
   { title: "Equipos", key: "teams" },
   { title: "Jugadores", key: "players" },
+  { title: "Competiciones", key: "competitions" },
   { title: "Sistema", key: "system" },
 ];
 
 const root = document.querySelector("#docs-root");
 const groupOf = (ep) =>
-  ep.url.startsWith("/teams") ? "teams" : ep.url.startsWith("/players") ? "players" : "system";
+  ep.url.startsWith("/teams") ? "teams" : ep.url.startsWith("/players") ? "players" : ep.url.startsWith("/competitions") ? "competitions" : "system";
 
 function render() {
   root.innerHTML = GROUP.map((g) => {
