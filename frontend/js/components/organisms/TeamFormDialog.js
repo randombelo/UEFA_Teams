@@ -1,4 +1,5 @@
 import { FormField } from "../molecules/FormField.js";
+import { CheckboxGroup } from "../molecules/CheckboxGroup.js";
 import { Input } from "../atoms/Input.js";
 import { Select } from "../atoms/Select.js";
 import { Btn } from "../atoms/Btn.js";
@@ -12,10 +13,12 @@ const DIVISIONS = [
 
 const REQUIRED = ["name", "country", "founded_date", "uefa_ranking", "division", "head_coach", "president"];
 
-export function TeamFormDialog({ title = "Nuevo equipo", values = {}, errors = {} }) {
+export function TeamFormDialog({ title = "Nuevo equipo", values = {}, errors = {}, competitions = [] }) {
   const v = (k, f = "") => values[k] ?? f;
   const err = (k) => errors[k] ?? "";
   const editing = Boolean(values.id);
+  const selectedIds = (values.competitions || []).map((c) => c.id);
+  const competitionItems = competitions.map((c) => ({ value: c.id, label: c.name, checked: selectedIds.includes(c.id) }));
   const field = (id, label, types, required = false) => ({
     FormField: (children, name) => FormField({ id, label, required, error: err(name),
       children: Input({ type: types, id, name, value: v(name), required }) }),
@@ -41,6 +44,7 @@ export function TeamFormDialog({ title = "Nuevo equipo", values = {}, errors = {
           children: Input({ type: "text", id: "tf-coach", name: "head_coach", value: v("head_coach"), required: true }) })}
         ${FormField({ id: "tf-president", label: "Presidente", required: true, error: err("president"),
           children: Input({ type: "text", id: "tf-president", name: "president", value: v("president"), required: true }) })}
+        ${CheckboxGroup({ name: "competition_ids", legend: "Competiciones", items: competitionItems })}
         <div class="dialog__actions">
           ${Btn({ label: "Cancelar", variant: "ghost", type: "button", id: "team-form-cancel" })}
           ${Btn({ label: "Guardar", type: "submit" })}
@@ -53,6 +57,7 @@ export function mountTeamFormDialog({ onCreate, onUpdate }) {
   const host = document.createElement("div");
   document.body.appendChild(host);
   let current = null;                                   // null = crear; {id,…} = editar
+  let competitions = [];
 
   const mapFields = (err) => Array.isArray(err.fields)
     ? Object.fromEntries(err.fields.map((f) => [f.field.replace(/^body\./, ""), f.message]))
@@ -72,21 +77,22 @@ export function mountTeamFormDialog({ onCreate, onUpdate }) {
       id: d.get("id"), name: d.get("name"), country: d.get("country"),
       founded_date: d.get("founded_date"),
       titles_won: Number(d.get("titles_won")), uefa_ranking: Number(d.get("uefa_ranking")),
-      division: d.get("division"), head_coach: d.get("head_coach"), president: d.get("president")
+      division: d.get("division"), head_coach: d.get("head_coach"), president: d.get("president"),
+      competition_ids: d.getAll("competition_ids").map(Number)
     };
   };
 
   const title = () => (current ? "Editar equipo" : "Nuevo equipo");
 
   const render = (values, errors = {}) => {
-    host.innerHTML = TeamFormDialog({ title: title(), values, errors });
+    host.innerHTML = TeamFormDialog({ title: title(), values, errors, competitions });
     const dialog = host.querySelector("dialog");
     host.querySelector("#team-form-cancel").addEventListener("click", () => dialog.close());
     host.querySelector("#team-form").addEventListener("submit", onFormSubmit);
     dialog.showModal();
   };
 
-  const open = (team) => { current = team; render(team ?? {}); };
+  const open = (team, comps = []) => { current = team; competitions = comps; render(team ?? {}); };
 
   const onFormSubmit = async (e) => {
     e.preventDefault();

@@ -3,14 +3,23 @@ import { PaginationBar, mountPaginationBar } from "../components/molecules/Pagin
 import { Btn } from "../components/atoms/Btn.js";
 import { TeamTable, mountTeamTable } from "../components/organisms/TeamTable.js";
 import { teamService } from "../services/teamService.js";
+import { competitionService } from "../services/competitionService.js";
 import { showToast } from "../components/organisms/Toast.js";
 import { mountTeamFormDialog } from "../components/organisms/TeamFormDialog.js";
 import { mountConfirmDialog } from "../components/organisms/ConfirmDialog.js";
 
-const state = { page: 1, limit: 10, teams: [], loading: false, search: "", hasNext: false };
+const state = { page: 1, limit: 10, teams: [], competitions: [], loading: false, search: "", hasNext: false };
 let pendingDeleteId = null; 
 const toolbar = document.querySelector("#teams-toolbar");
 const root = document.querySelector("#teams-root");
+
+async function loadCompetitions() {
+  try {
+    state.competitions = await competitionService.list();
+  } catch (err) {
+    showToast({ type: "danger", message: err.message || "Error al cargar competiciones" });
+  }
+}
 
 async function loadTeams() {
   state.loading = true;
@@ -64,9 +73,9 @@ export function mountTeams() {
       }
     },
   });
-  toolbar.addEventListener("click", (e) => { if (e.target.closest("#add-team")) openTeamForm(null); });
+  toolbar.addEventListener("click", (e) => { if (e.target.closest("#add-team")) openTeamForm(null, state.competitions); });
   mountTeamTable(root, {
-    onEdit: (id) => { const team = state.teams.find((t) => t.id === id); if (team) openTeamForm(team); },
+    onEdit: (id) => { const team = state.teams.find((t) => t.id === id); if (team) openTeamForm(team, state.competitions); },
     onDelete: (id) => {
       const team = state.teams.find((t) => t.id === id);
       if (!team) return;
@@ -75,4 +84,5 @@ export function mountTeams() {
     },
   });
   loadTeams();
+  loadCompetitions();
 }
